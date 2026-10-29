@@ -1,17 +1,564 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <title>Hello World</title>
-  <style>
-    body { font-family: monospace; display: flex; flex-direction: column; 
-           justify-content: center; align-items: center; height: 100vh; margin: 0; }
-    footer { position: fixed; bottom: 0; width: 100%; text-align: center; 
-             padding: 1rem; font-size: 0.8rem; color: #666; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gleb Bakhtin — SRE / DevOps Engineer</title>
+<meta name="description" content="SRE and DevOps engineer in Moscow: Kubernetes, CI/CD, infrastructure as code, observability. Open to Middle+ roles, remote or with relocation.">
+<meta name="theme-color" content="#0E1923">
+<link rel="canonical" href="https://dephobos.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dephobos.github.io/">
+<meta property="og:title" content="Gleb Bakhtin — SRE / DevOps Engineer">
+<meta property="og:description" content="Kubernetes, CI/CD, infrastructure as code, observability. Open to Middle+ DevOps/SRE roles.">
+<meta property="og:image" content="https://dephobos.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Gleb Bakhtin, SRE / DevOps Engineer">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231F5FBF'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='15' font-weight='700' fill='white' text-anchor='middle'%3EGB%3C/text%3E%3C/svg%3E">
+
+<!-- Set saved theme and language before first paint, so the page does not flash -->
+<script>
+(function(){
+  var d=document.documentElement,t,l;
+  try{t=localStorage.getItem('theme');l=localStorage.getItem('lang');}catch(e){}
+  var q=new URLSearchParams(location.search).get('lang');
+  if(q==='en'||q==='ru')l=q;
+  d.setAttribute('data-theme',t==='light'?'light':'dark');
+  d.setAttribute('lang',l==='ru'?'ru':'en');
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ---------- Tokens. Dark is the default theme. ---------- */
+:root{
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+
+  --bg:#0E1923; --surface:#15232F; --ink:#E3EBF1; --muted:#93A6B5; --line:#2B3D4C;
+  --accent:#72A9F2; --on-accent:#0E1923; --ok:#4CC38A;
+  --dev:#1D4A73; --dev-ink:#E3EBF1; --ops:#2F74D6; --rel:#2563C4; --ops-ink:#fff;
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#E9EEF2; --surface:#FFFFFF; --ink:#14212B; --muted:#4A5B68; --line:#B7C3CC;
+  --accent:#1F5FBF; --on-accent:#FFFFFF; --ok:#1E8E5A;
+  --dev:#8EC9F4; --dev-ink:#14212B; --ops:#1F6FCB; --rel:#1F5FBF; --ops-ink:#fff;
+  color-scheme:light;
+}
+
+/* Language switching: only the active language is shown */
+html[lang="en"] [data-l="ru"], html[lang="ru"] [data-l="en"]{display:none !important}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.65 var(--body);transition:background .2s,color .2s}
+main{max-width:46rem;margin:0 auto;padding:clamp(1.5rem,5vw,3rem) 1.5rem 3rem}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0}
+h1{font-size:clamp(2.8rem,9vw,5.2rem);font-weight:700;letter-spacing:-.02em}
+h2{font-size:1.5rem;font-weight:700;margin-bottom:1.5rem}
+h3{font-size:1.2rem;font-weight:500}
+a{color:var(--accent);text-underline-offset:.2em}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+section{margin-top:5rem}
+.lead{font-size:1.25rem;max-width:34rem;margin:1.25rem 0 0}
+
+/* ---------- Top bar: contacts left, switches right ---------- */
+.top{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin:0 0 clamp(2.5rem,8vw,5rem)}
+.icons{display:flex;gap:.6rem}
+.icons a{width:2.6rem;height:2.6rem;display:grid;place-items:center;border:1.5px solid var(--line);border-radius:50%;color:var(--ink);transition:color .15s,border-color .15s,background .15s}
+.icons a:hover{color:var(--accent);border-color:var(--accent);background:var(--surface)}
+.icons svg{width:1.2rem;height:1.2rem}
+
+.switches{display:flex;gap:.5rem;align-items:center}
+.langs{display:flex;border:1.5px solid var(--line);border-radius:999px;padding:2px}
+.langs button,.theme-btn{font:600 .85rem var(--body);color:var(--muted);background:none;border:0;cursor:pointer}
+.langs button{padding:.35rem .7rem;border-radius:999px}
+.langs button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.langs button:hover:not([aria-pressed="true"]){color:var(--ink)}
+.theme-btn{width:2.4rem;height:2.4rem;display:grid;place-items:center;border:1.5px solid var(--line);border-radius:50%;color:var(--ink)}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+.theme-btn svg{width:1.15rem;height:1.15rem}
+:root[data-theme="dark"] .i-moon, :root[data-theme="light"] .i-sun{display:none}
+
+/* ---------- Hero ---------- */
+.status{display:inline-flex;align-items:center;gap:.55rem;margin:0 0 1.25rem;padding:.3rem .85rem .3rem .7rem;border:1.5px solid var(--line);border-radius:999px;font-size:.92rem;color:var(--muted)}
+.status::before{content:"";width:.55rem;height:.55rem;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 25%,transparent)}
+.cta{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1.25rem;margin:2rem 0 0}
+.btn{display:inline-flex;align-items:center;gap:.55rem;padding:.75rem 1.3rem;border-radius:.6rem;background:var(--accent);color:var(--on-accent);font-weight:600;text-decoration:none;transition:filter .15s}
+.btn:hover{filter:brightness(1.1)}
+.btn svg{width:1.1rem;height:1.1rem}
+
+/* Hero: the DevOps loop. Each stage lights up in turn, nonstop. */
+.loop{display:block;width:100%;max-width:36rem;height:auto;margin:3rem 0 0}
+.seg{opacity:.5;animation:lit 11.2s infinite;animation-delay:calc(var(--i)*1.4s)}
+.seg path{fill:var(--dev)}
+.seg.ops path{fill:var(--ops)} .seg.rel path{fill:var(--rel)}
+.seg text{font:700 17px var(--display);text-anchor:middle;dominant-baseline:central;fill:var(--dev-ink)}
+.seg.ops text,.seg.rel text{fill:var(--ops-ink)}
+.big{font:700 42px var(--display);text-anchor:middle;dominant-baseline:central;fill:var(--ink)}
+@keyframes lit{0%{opacity:.5}3%,12%{opacity:1}16%,100%{opacity:.5}}
+
+/* ---------- Experience ---------- */
+article{border-left:3px solid var(--accent);padding-left:1.25rem;margin-bottom:2.5rem}
+article.minor{border-left-color:var(--line)}
+article .meta{margin:.25rem 0 .75rem;color:var(--muted)}
+article ul{margin:0;padding-left:1.1rem;max-width:40rem}
+article li{margin-bottom:.4rem}
+
+/* ---------- Skills ---------- */
+.sk-group{display:grid;grid-template-columns:12rem 1fr;gap:.6rem 1.5rem;padding:1rem 0;border-top:1px solid var(--line)}
+.sk-group:last-child{border-bottom:1px solid var(--line)}
+.sk-label{font:500 1rem/1.4 var(--body);padding-top:.4rem}
+.chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{display:inline-flex;align-items:center;gap:.45rem;padding:.32rem .8rem;border-radius:999px;font:500 .95rem/1.4 var(--body);border:1.5px solid var(--line);color:var(--muted);background:none}
+button.chip{cursor:pointer;color:var(--ink);border-color:color-mix(in srgb,var(--accent) 60%,transparent);background:color-mix(in srgb,var(--accent) 13%,transparent);transition:background .15s,color .15s}
+button.chip::after{content:"+";font-weight:700;font-size:1.05em;line-height:1;color:var(--accent);transition:transform .2s}
+button.chip:hover{background:color-mix(in srgb,var(--accent) 24%,transparent)}
+button.chip[aria-expanded="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+button.chip[aria-expanded="true"]::after{color:var(--on-accent);transform:rotate(45deg)}
+.note{grid-column:2;background:var(--surface);border-left:3px solid var(--accent);border-radius:0 .5rem .5rem 0;padding:.9rem 1.1rem;animation:open .2s ease-out}
+.note[hidden]{display:none}
+.note h4{margin:0 0 .3rem;font:700 1rem var(--display)}
+.note p{margin:0}
+@keyframes open{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media (max-width:36rem){
+  .sk-group{grid-template-columns:1fr}
+  .sk-label{padding-top:0}
+  .note{grid-column:1}
+}
+
+/* ---------- Education ---------- */
+.edu{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
+.edu li{display:grid;grid-template-columns:6.5rem 1fr;gap:1.5rem}
+.edu .yr{color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* ---------- Contacts ---------- */
+.contact-row{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.5rem}
+.contact-row .cta{margin:0}
+footer{margin-top:5rem;padding-top:1.5rem;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+footer p{margin:0 0 .3rem}
+footer a{color:var(--muted)}
+footer a:hover{color:var(--accent)}
+footer code{font-size:.85em}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .seg{animation:none;opacity:1}
+  .note,button.chip::after{animation:none;transition:none}
+}
+</style>
 </head>
 <body>
-  <h1>Hello World</h1>
-  <footer>Last deployed: __DEPLOY_DATE__ · commit __COMMIT_SHA__</footer>
+<main>
+  <header>
+    <div class="top">
+      <nav class="icons" aria-label="Contact">
+        <a href="mailto:gleb@bakhtin.dev" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+        <a href="https://t.me/AstraProxima" aria-label="Telegram" title="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+        <a href="https://www.linkedin.com/in/astraproxima/" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        <a href="https://github.com/DePhobos" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      </nav>
+      <div class="switches">
+        <div class="langs" role="group" aria-label="Language / Язык">
+          <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-set-lang="ru" aria-pressed="false">RU</button>
+        </div>
+        <button type="button" class="theme-btn" id="theme-btn" aria-label="Switch to light theme">
+          <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+          <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <p class="status">
+      <span data-l="en">Open to Middle+ DevOps/SRE roles, remote or with relocation</span>
+      <span data-l="ru">Ищу позицию Middle+ DevOps/SRE, удалённо или с релокацией</span>
+    </p>
+    <h1><span data-l="en">Gleb Bakhtin</span><span data-l="ru">Глеб Бахтин</span></h1>
+    <p class="lead">
+      <span data-l="en">SRE and DevOps engineer in Moscow with six years in IT. I keep high-load systems reliable and automate how software is built, shipped and run.</span>
+      <span data-l="ru">SRE и DevOps-инженер из Москвы, шесть лет в IT. Отвечаю за надёжность высоконагруженных систем и автоматизирую то, как софт собирается, выкатывается и работает.</span>
+    </p>
+
+    <!-- Resume button follows the selected language -->
+    <div class="cta">
+      <a class="btn" data-l="en" href="resume-en.pdf" download="Gleb_Bakhtin_Resume_EN.pdf">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg>
+        Download resume (PDF)
+      </a>
+      <a class="btn" data-l="ru" href="resume-ru.pdf" download="Глеб_Бахтин_Резюме_RU.pdf">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg>
+        Скачать резюме (PDF)
+      </a>
+    </div>
+
+    <svg class="loop" viewBox="0 0 600 240" role="img" aria-label="DevOps loop: plan, code, build, test, release, deploy, operate, monitor">
+      <g class="seg dev" style="--i:0"><path d="M311 96L307 92L303 87L300 83L295 79L291 75L287 71L283 67L278 63L274 59L269 56L265 52L260 49L255 45L251 42L218 50L224 82L228 84L232 87L236 90L239 93L243 96L247 99L251 103L254 106L258 109L261 113L265 116L268 120L272 124L275 127Z"/><text transform="translate(270 88) rotate(43)">Plan</text></g>
+      <g class="seg dev" style="--i:1"><path d="M214 21L205 17L195 14L185 11L175 8L164 7L154 6L143 6L133 7L122 8L112 11L102 14L92 17L82 22L73 27L68 61L98 68L104 65L110 62L117 59L124 57L131 56L138 55L145 54L152 54L159 55L166 56L173 57L180 59L187 62L194 65Z"/><text transform="translate(148 30) rotate(-1)">Code</text></g>
+      <g class="seg dev" style="--i:2"><path d="M38 58L31 67L26 77L21 88L18 99L16 111L16 122L17 134L19 145L23 156L28 167L34 177L40 186L48 194L56 201L90 195L87 164L82 160L77 155L73 150L70 144L68 139L66 133L65 127L64 121L64 115L65 109L67 103L69 98L72 92L76 87Z"/><text transform="translate(40 127) rotate(85)">Build</text></g>
+      <g class="seg dev" style="--i:3"><path d="M96 224L104 227L112 229L121 231L129 233L137 233L146 234L155 234L163 233L172 232L181 230L189 228L197 226L204 223L212 220L222 188L193 176L187 178L181 180L175 182L170 184L164 185L158 186L153 186L147 186L141 186L135 185L130 184L124 183L118 181L113 179Z"/><text transform="translate(150 210) rotate(0)">Test</text></g>
+      <g class="seg ops" style="--i:5"><path d="M390 73L398 69L405 65L413 62L421 59L429 57L437 55L444 54L452 54L460 54L468 55L476 57L483 59L491 62L498 65L527 56L520 23L509 18L498 14L487 10L476 8L464 7L453 6L441 6L429 8L417 10L406 13L396 17L386 21L376 26L366 31Z"/><text transform="translate(439 31) rotate(-7)">Deploy</text></g>
+      <g class="seg ops" style="--i:6"><path d="M521 83L526 89L529 95L532 101L534 107L536 114L536 121L535 127L534 134L532 140L529 146L525 152L520 158L515 163L509 168L504 198L538 206L547 199L556 190L564 181L570 170L576 159L580 147L583 134L584 121L583 108L581 95L577 83L571 72L565 61L557 51Z"/><text transform="translate(560 127) rotate(-85)">Operate</text></g>
+      <g class="seg ops" style="--i:7"><path d="M482 181L474 183L467 185L459 186L451 186L443 186L435 185L428 183L420 181L412 178L404 174L396 170L389 166L381 162L374 157L343 163L346 196L355 202L365 208L374 213L384 218L394 222L405 226L416 229L427 232L439 233L451 234L462 234L474 232L485 230L497 227Z"/><text transform="translate(426 207) rotate(13)">Monitor</text></g>
+      <g class="seg rel" style="--i:4"><path d="M249 199L259 192L268 185L278 178L286 170L295 161L303 153L311 144L319 135L325 127L332 120L339 113L346 106L354 99L361 93L364 61L332 55L322 62L314 70L305 79L297 87L289 96L281 105L275 113L268 120L261 127L254 134L246 141L239 148L231 154L222 159Z"/><text transform="translate(290 131) rotate(-48)">Release</text></g>
+      <text class="big" x="150" y="122">Dev</text>
+      <text class="big" x="450" y="122">Ops</text>
+    </svg>
+  </header>
+
+  <!-- ================= EXPERIENCE ================= -->
+  <section id="experience">
+    <h2><span data-l="en">Experience</span><span data-l="ru">Опыт</span></h2>
+
+    <article>
+      <h3><span data-l="en">Alfa-Bank</span><span data-l="ru">Альфа-Банк</span></h3>
+      <p class="meta"><span data-l="en">SRE engineer, March 2025 to September 2026</span><span data-l="ru">SRE-инженер, март 2025 — сентябрь 2026</span></p>
+      <ul data-l="en">
+        <li>Kept mission-critical banking systems reliable for 40M users at about 300K RPS, within SLA/SLO targets.</li>
+        <li>Was the only DevOps engineer on self-hosted Sentry for the mobile banking platform, from pilot to production, where it fully replaced Firebase. Responsible for its infrastructure: a highly available install on a 20-node Kubernetes cluster.</li>
+        <li>Built Grafana-based observability that cut incident investigation time by about 60%.</li>
+        <li>Managed infrastructure with Terraform on Yandex Cloud; right-sized test environments and cut cloud costs by 27%.</li>
+        <li>On call: investigated production incidents and ran root cause analysis with ELK, API tracing and microservice diagnostics.</li>
+        <li>Rolled out production releases of API and UI components and checked service health after each deploy.</li>
+      </ul>
+      <ul data-l="ru">
+        <li>Отвечал за надёжность критичных банковских систем: 40 млн пользователей, около 300K RPS, в рамках SLA/SLO.</li>
+        <li>Был единственным DevOps-инженером в проекте self-hosted Sentry для мобильного банка: от пилота до продакшена, где Sentry полностью заменил Firebase. Отвечал за инфраструктуру — отказоустойчивую инсталляцию на 20-нодовом Kubernetes-кластере.</li>
+        <li>Построил observability в Grafana и сократил время разбора инцидентов примерно на 60%.</li>
+        <li>Вёл инфраструктуру через Terraform в Yandex Cloud; оптимизировал тестовые окружения и снизил расходы на облако на 27%.</li>
+        <li>Дежурства: разбирал продакшен-инциденты и проводил RCA с помощью ELK, трассировки API и диагностики микросервисов.</li>
+        <li>Выкатывал продакшен-релизы API- и UI-компонентов и проверял состояние сервисов после деплоя.</li>
+      </ul>
+    </article>
+
+    <article>
+      <h3><span data-l="en">Programmny Produkt</span><span data-l="ru">Программный продукт</span></h3>
+      <p class="meta"><span data-l="en">DevOps engineer, November 2023 to November 2024</span><span data-l="ru">DevOps-инженер, ноябрь 2023 — ноябрь 2024</span></p>
+      <ul data-l="en">
+        <li>Moved ticket machines of the metro and suburban rail payment systems from Windows to Astra Linux: installed the OS, sorted out hardware drivers and wrote an Ansible playbook that now sets up each new machine.</li>
+        <li>Wrote an Ansible role for mass OS updates of tens of thousands of tram fare validators that can resume interrupted runs, cutting manual effort by 70 to 80%.</li>
+        <li>Ran log collection for about 60,000 devices in ELK; ILM policies and a cold storage tier cut storage costs by 40%.</li>
+        <li>Set up monitoring and alerting for the same fleet with Prometheus, Grafana and Zabbix.</li>
+        <li>Built a GitLab CI pipeline (Docker + Ansible) that cut environment provisioning from 2 hours to 15 minutes.</li>
+        <li>Maintained production and test environments and ran zero-downtime infrastructure releases.</li>
+      </ul>
+      <ul data-l="ru">
+        <li>Переводил билетные автоматы платёжных систем метро и ЦППК с Windows на Astra Linux: ставил ОС, подбирал драйверы под оборудование и написал Ansible-плейбук, который теперь настраивает каждый новый автомат.</li>
+        <li>Написал Ansible-роль для массового обновления ОС на десятках тысяч трамвайных валидаторов с возможностью продолжить прерванное обновление; ручной работы стало меньше на 70–80%.</li>
+        <li>Вёл сбор логов примерно с 60 000 устройств в ELK; ILM-политики и холодное хранилище снизили расходы на хранение на 40%.</li>
+        <li>Настроил мониторинг и алертинг для этого парка на Prometheus, Grafana и Zabbix.</li>
+        <li>Собрал пайплайн GitLab CI (Docker + Ansible), который сократил развёртывание окружения с 2 часов до 15 минут.</li>
+        <li>Поддерживал продакшен и тестовые окружения, проводил инфраструктурные релизы без простоя.</li>
+      </ul>
+    </article>
+
+    <article class="minor">
+      <h3>Elfin</h3>
+      <p class="meta"><span data-l="en">Technical support engineer, December 2021 to November 2023</span><span data-l="ru">Инженер техподдержки, декабрь 2021 — ноябрь 2023</span></p>
+      <ul data-l="en">
+        <li>Supported users of a bank guarantee platform and the office; handled smaller tasks in ELK, Redis and Sentry and on hosts.</li>
+        <li>Wrote a Telegram bot for booking office desks (Python, SQLite, Docker): about 20 developers pick a date and a desk on a floor map instead of negotiating in chat. The team uses it regularly.</li>
+      </ul>
+      <ul data-l="ru">
+        <li>Поддерживал пользователей платформы выдачи банковских гарантий и офис; решал небольшие задачи в ELK, Redis, Sentry и на хостах.</li>
+        <li>Написал Telegram-бота для бронирования рабочих мест (Python, SQLite, Docker): около 20 разработчиков выбирают дату и стол по карте, а не договариваются в чате. Команда пользуется им регулярно.</li>
+      </ul>
+    </article>
+
+    <article class="minor">
+      <h3>NetAdmin</h3>
+      <p class="meta"><span data-l="en">Systems administrator, August 2020 to December 2021</span><span data-l="ru">Системный администратор, август 2020 — декабрь 2021</span></p>
+      <ul data-l="en">
+        <li>Replaced email approvals and two paper logs for business centre guest passes with web forms and a CRM with mail automation: about 2 minutes per pass instead of 10, over 1,000 requests a month, handled by one security officer.</li>
+      </ul>
+      <ul data-l="ru">
+        <li>Заменил согласование по почте и два бумажных журнала гостевых пропусков бизнес-центра на веб-формы и CRM с автоматизацией почты: около 2 минут на пропуск вместо 10, больше 1000 заявок в месяц, обрабатывает один сотрудник охраны.</li>
+      </ul>
+    </article>
+  </section>
+
+  <!-- ================= SKILLS =================
+       To make a plain skill clickable:
+       1) replace <span class="chip">X</span> with
+          <button type="button" class="chip" aria-expanded="false" aria-controls="n-x">X</button>
+       2) add a <div class="note" id="n-x" hidden> block in the same group, like the ones below. -->
+  <section id="skills">
+    <h2><span data-l="en">What I work with</span><span data-l="ru">С чем работаю</span></h2>
+
+    <div class="sk-group">
+      <h3 class="sk-label"><span data-l="en">Containers and orchestration</span><span data-l="ru">Контейнеры и оркестрация</span></h3>
+      <ul class="chips">
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-k8s">Kubernetes</button></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-docker">Docker</button></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-helm">Helm</button></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-argo">ArgoCD (GitOps)</button></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-linux">Linux</button></li>
+      </ul>
+      <div class="note" id="n-k8s" hidden><h4>Kubernetes</h4>
+        <p data-l="en">At Alfa-Bank I operated production Kubernetes platforms for banking systems with 40M users and about 300K RPS. I was also the only DevOps engineer on self-hosted Sentry, a highly available install on a 20-node cluster that went from pilot to production.</p>
+        <p data-l="ru">В Альфа-Банке эксплуатировал продакшен Kubernetes мобильного банка: 40 млн пользователей, около 300K RPS. Был единственным DevOps-инженером в проекте self-hosted Sentry: отказоустойчивая инсталляция на 20-нодовом кластере прошла путь от пилота до продакшена.</p>
+      </div>
+      <div class="note" id="n-docker" hidden><h4>Docker</h4>
+        <p data-l="en">At Programmny Produkt I built a GitLab CI pipeline on Docker and Ansible that brought environment provisioning down from 2 hours to 15 minutes.</p>
+        <p data-l="ru">В «Программном продукте» собрал пайплайн GitLab CI на Docker и Ansible, который сократил развёртывание окружения с 2 часов до 15 минут.</p>
+      </div>
+      <div class="note" id="n-helm" hidden><h4>Helm</h4>
+        <p data-l="en">At Alfa-Bank I deployed and upgraded services in Kubernetes with Helm charts, including self-hosted Sentry, and tuned values.yaml for each environment. I took part in moving deployments to Helm, which we later used for canary releases.</p>
+        <p data-l="ru">В Альфа-Банке развёртывал и обновлял сервисы в Kubernetes с помощью Helm-чартов (включая self-hosted Sentry), настраивал параметры через values.yaml под конкретное окружение. Участвовал в переходе на деплой через Helm, на котором потом строились канареечные релизы.</p>
+      </div>
+      <div class="note" id="n-argo" hidden><h4>ArgoCD</h4>
+        <p data-l="en">When Alfa-Bank moved its test environment to ArgoCD, I wrote the configuration in CUE and synced the changes to the cluster.</p>
+        <p data-l="ru">При переводе тестовой среды Альфа-Банка на ArgoCD писал конфигурацию на CUE и синхронизировал изменения с кластером.</p>
+      </div>
+      <div class="note" id="n-linux" hidden><h4>Linux</h4>
+        <p data-l="en">I moved ticket machines for metro and suburban rail payments from Windows to Astra Linux, a Russian Debian-based OS: installed the system, found and configured drivers for the hardware, then automated the whole setup with Ansible. I also rolled out OS updates to tens of thousands of fare validators.</p>
+        <p data-l="ru">Перевёл билетные автоматы платёжных систем метро и ЦППК с Windows на Astra Linux: ставил систему, подбирал и настраивал драйверы под оборудование, потом автоматизировал всю настройку через Ansible. Обновлял ОС на десятках тысяч валидаторов.</p>
+      </div>
+    </div>
+
+    <div class="sk-group">
+      <h3 class="sk-label">CI/CD</h3>
+      <ul class="chips">
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-gitlab">GitLab CI</button></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-jenkins">Jenkins</button></li>
+      </ul>
+      <div class="note" id="n-gitlab" hidden><h4>GitLab CI</h4>
+        <p data-l="en">At Programmny Produkt I built pipelines for the metro and suburban rail payment systems, including one on Docker and Ansible that cut environment provisioning from 2 hours to 15 minutes.</p>
+        <p data-l="ru">В «Программном продукте» строил пайплайны для платёжных систем метро и ЦППК, в том числе пайплайн на Docker и Ansible, который сократил развёртывание окружения с 2 часов до 15 минут.</p>
+      </div>
+      <div class="note" id="n-jenkins" hidden><h4>Jenkins</h4>
+        <p data-l="en">At Alfa-Bank I edited pipelines, connected repositories and set up builds that trigger on commits.</p>
+        <p data-l="ru">В Альфа-Банке правил пайплайны, подключал репозитории и настраивал запуск сборок по коммитам.</p>
+      </div>
+    </div>
+
+    <div class="sk-group">
+      <h3 class="sk-label"><span data-l="en">Cloud and IaC</span><span data-l="ru">Облако и IaC</span></h3>
+      <ul class="chips">
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-tf">Terraform</button></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-yc">Yandex Cloud</button></li>
+      </ul>
+      <div class="note" id="n-tf" hidden><h4>Terraform</h4>
+        <p data-l="en">At Alfa-Bank I managed infrastructure as code with Terraform on Yandex Cloud. Right-sizing test environments cut cloud costs by 27%.</p>
+        <p data-l="ru">В Альфа-Банке вёл инфраструктуру как код на Terraform в Yandex Cloud. Пересмотрел размеры тестовых окружений и снизил расходы на облако на 27%.</p>
+      </div>
+      <div class="note" id="n-yc" hidden><h4>Yandex Cloud</h4>
+        <p data-l="en">At Alfa-Bank I managed infrastructure on Yandex Cloud through Terraform; right-sizing test environments saved 27% of cloud costs. In 2024 I completed the Yandex Cloud course on Docker.</p>
+        <p data-l="ru">В Альфа-Банке управлял инфраструктурой в Yandex Cloud через Terraform; оптимизация тестовых окружений сэкономила 27% расходов на облако. В 2024 году прошёл курс Yandex Cloud по Docker.</p>
+      </div>
+    </div>
+
+    <div class="sk-group">
+      <h3 class="sk-label"><span data-l="en">Monitoring and logging</span><span data-l="ru">Мониторинг и логи</span></h3>
+      <ul class="chips">
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-prom">Prometheus</button></li>
+        <li><span class="chip">VictoriaMetrics</span></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-grafana">Grafana</button></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-zabbix">Zabbix</button></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-elk">ELK</button></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-sentry">Sentry</button></li>
+      </ul>
+      <div class="note" id="n-prom" hidden><h4>Prometheus</h4>
+        <p data-l="en">At Programmny Produkt I collected metrics from about 60,000 fare validators and from our server cluster, and set up alerting on top of them together with Grafana and Zabbix.</p>
+        <p data-l="ru">В «Программном продукте» собирал метрики примерно с 60 000 валидаторов и с кластера серверов, настраивал по ним алертинг вместе с Grafana и Zabbix.</p>
+      </div>
+      <div class="note" id="n-grafana" hidden><h4>Grafana</h4>
+        <p data-l="en">At Alfa-Bank I built many dashboards that sped up incident analysis and shipping code to production. Incident investigation time dropped by about 60%.</p>
+        <p data-l="ru">В Альфа-Банке сделал много дашбордов, которые ускорили разбор инцидентов и поставку кода в прод. Время разбора инцидентов сократилось примерно на 60%.</p>
+      </div>
+      <div class="note" id="n-zabbix" hidden><h4>Zabbix</h4>
+        <p data-l="en">At Programmny Produkt Zabbix was part of the monitoring and alerting for about 60,000 devices, alongside Prometheus and Grafana. I also upgraded it to new versions.</p>
+        <p data-l="ru">В «Программном продукте» Zabbix был частью мониторинга и алертинга для примерно 60 000 устройств, вместе с Prometheus и Grafana. Ещё занимался обновлением его версий.</p>
+      </div>
+      <div class="note" id="n-elk" hidden><h4>ELK</h4>
+        <p data-l="en">At Programmny Produkt I ran log collection for about 60,000 devices; ILM policies and a cold storage tier cut storage costs by 40%. At Alfa-Bank I used ELK for root cause analysis of production incidents while on call.</p>
+        <p data-l="ru">В «Программном продукте» вёл сбор логов примерно с 60 000 устройств; ILM-политики и холодное хранилище снизили расходы на хранение на 40%. В Альфа-Банке на дежурствах искал по ELK причины продакшен-инцидентов.</p>
+      </div>
+      <div class="note" id="n-sentry" hidden><h4>Sentry</h4>
+        <p data-l="en">At Alfa-Bank I was the only DevOps engineer on self-hosted Sentry for the mobile banking platform. I was responsible for its infrastructure: a highly available install on a 20-node Kubernetes cluster with Kafka, sharded ClickHouse, PostgreSQL and MongoDB underneath. It started as a pilot, went to production and fully replaced Firebase.</p>
+        <p data-l="ru">В Альфа-Банке был единственным DevOps-инженером в проекте self-hosted Sentry для мобильного банка. Отвечал за инфраструктуру: отказоустойчивую инсталляцию на 20-нодовом Kubernetes-кластере с Kafka, шардированным ClickHouse, PostgreSQL и MongoDB. Проект начинался как пилот, ушёл в продакшен и полностью заменил Firebase.</p>
+      </div>
+    </div>
+
+    <div class="sk-group">
+      <h3 class="sk-label"><span data-l="en">Data and streaming</span><span data-l="ru">Данные и стриминг</span></h3>
+      <ul class="chips">
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-kafka">Kafka</button></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-ch">ClickHouse</button></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-pg">PostgreSQL</button></li>
+        <li><span class="chip">Redis</span></li>
+        <li><span class="chip">MongoDB</span></li>
+      </ul>
+      <div class="note" id="n-kafka" hidden><h4>Kafka</h4>
+        <p data-l="en">Used heavily at Alfa-Bank: I connected producers and configured topics, including for Sentry.</p>
+        <p data-l="ru">В Альфа-Банке Kafka применялась активно: подключал продюсеров, настраивал топики, в том числе для Sentry.</p>
+      </div>
+      <div class="note" id="n-ch" hidden><h4>ClickHouse</h4>
+        <p data-l="en">At Alfa-Bank I set up a sharded ClickHouse cluster for Sentry.</p>
+        <p data-l="ru">В Альфа-Банке настраивал шардированный кластер ClickHouse для Sentry.</p>
+      </div>
+      <div class="note" id="n-pg" hidden><h4>PostgreSQL</h4>
+        <p data-l="en">Deployed and maintained PostgreSQL in Kubernetes, configured through Helm charts and StatefulSets, and took care of failover and backups. For Sentry it held the configuration.</p>
+        <p data-l="ru">Развёртывал и сопровождал PostgreSQL в Kubernetes (настройка через Helm-чарты и StatefulSet), обеспечивал отказоустойчивость и резервное копирование. Для Sentry в нём хранилась конфигурация.</p>
+      </div>
+    </div>
+
+    <div class="sk-group">
+      <h3 class="sk-label"><span data-l="en">Automation</span><span data-l="ru">Автоматизация</span></h3>
+      <ul class="chips">
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-ansible">Ansible</button></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-bash">Bash</button></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-python">Python</button></li>
+      </ul>
+      <div class="note" id="n-ansible" hidden><h4>Ansible</h4>
+        <p data-l="en">At Alfa-Bank I wrote many roles for updating infrastructure components. At Programmny Produkt I wrote a role that updates the OS on tens of thousands of tram fare validators and can resume interrupted runs, which cut manual effort by 70 to 80%, and a playbook that sets up a new ticket machine on Astra Linux.</p>
+        <p data-l="ru">В Альфа-Банке написал много ролей для обновления компонентов инфраструктуры. В «Программном продукте» написал роль для массового обновления ОС на десятках тысяч трамвайных валидаторов, которая умеет продолжать прерванные обновления (ручной работы стало меньше на 70–80%), и плейбук, который настраивает новый билетный автомат на Astra Linux.</p>
+      </div>
+      <div class="note" id="n-bash" hidden><h4>Bash</h4>
+        <p data-l="en">Wrote scripts for Linux servers: backups, service and disk health checks, cleanup of old logs and artifacts, and small automations run from cron.</p>
+        <p data-l="ru">Писал скрипты для Linux-серверов: резервное копирование, проверки состояния сервисов и дисков, очистка старых логов и артефактов, мелкая автоматизация по cron.</p>
+      </div>
+      <div class="note" id="n-python" hidden><h4>Python</h4>
+        <p data-l="en">At Elfin I wrote a Telegram bot for booking office desks (Python, SQLite, Docker). About 20 developers pick a date and a desk on a floor map, and the team uses it regularly. I also wrote a script that splits record IDs into JSON batches of up to 200,000 so they can be sent to MongoDB as queries.</p>
+        <p data-l="ru">В Elfin написал Telegram-бота для бронирования рабочих мест (Python, SQLite, Docker). Около 20 разработчиков выбирают дату и стол по карте, команда пользуется им регулярно. Ещё написал скрипт, который нарезает идентификаторы на JSON-блоки до 200 000 записей, чтобы их было удобно отправлять запросами в MongoDB.</p>
+      </div>
+    </div>
+
+    <div class="sk-group">
+      <h3 class="sk-label"><span data-l="en">Security</span><span data-l="ru">Безопасность</span></h3>
+      <ul class="chips">
+        <li><span class="chip">HashiCorp Vault</span></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-sops">SOPS (age)</button></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-pki">PKI</button></li>
+      </ul>
+      <div class="note" id="n-sops" hidden><h4>SOPS (age)</h4>
+        <p data-l="en">For Sentry at Alfa-Bank we kept secrets in the repository encrypted with SOPS and age.</p>
+        <p data-l="ru">В проекте Sentry в Альфа-Банке хранили секреты в репозитории в зашифрованном виде через SOPS и age.</p>
+      </div>
+      <div class="note" id="n-pki" hidden><h4>PKI</h4>
+        <p data-l="en">Ran PKI day to day: issued and renewed TLS certificates for internal and external services (Ingress) and set up trust chains so that browsers and other microservices trust our certificates.</p>
+        <p data-l="ru">Занимался эксплуатацией PKI: выпускал и продлевал TLS-сертификаты для внутренних и внешних сервисов (Ingress), настраивал цепочки доверия, чтобы браузеры и другие микросервисы доверяли нашим сертификатам.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EDUCATION ================= -->
+  <section id="education">
+    <h2><span data-l="en">Education and courses</span><span data-l="ru">Образование и курсы</span></h2>
+    <ul class="edu">
+      <li><span class="yr">2019–2023</span><span><span data-l="en">MTI, Applied Computer Science</span><span data-l="ru">МТИ, прикладная информатика</span></span></li>
+      <li><span class="yr">2026</span><span><span data-l="en">Alfa Academy, Application Security</span><span data-l="ru">Альфа-Академия, AppSec</span></span></li>
+      <li><span class="yr">2024</span><span><span data-l="en">Yandex Cloud, Docker</span><span data-l="ru">Yandex Cloud, Docker</span></span></li>
+      <li><span class="yr"><span data-l="en">English</span><span data-l="ru">Английский</span></span><span>B1 (Intermediate)</span></li>
+    </ul>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact">
+    <h2><span data-l="en">Get in touch</span><span data-l="ru">Связаться</span></h2>
+    <div class="contact-row">
+  <nav class="icons" aria-label="Contact links">
+          <a href="mailto:gleb@bakhtin.dev" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+          <a href="https://t.me/AstraProxima" aria-label="Telegram" title="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+          <a href="https://www.linkedin.com/in/astraproxima/" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a href="https://github.com/DePhobos" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        </nav>
+      <div class="cta">
+        <a class="btn" data-l="en" href="resume-en.pdf" download="Gleb_Bakhtin_Resume_EN.pdf">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg>
+          Download resume (PDF)
+        </a>
+        <a class="btn" data-l="ru" href="resume-ru.pdf" download="Глеб_Бахтин_Резюме_RU.pdf">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg>
+          Скачать резюме (PDF)
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- The deploy date and commit placeholders below are filled in by the GitHub Actions workflow.
+       Each placeholder sits on its own line, so this works even if sed runs without the g flag. -->
+  <footer>
+    <p><span data-l="en">Deployed to GitHub Pages on every push. Source code is on</span><span data-l="ru">Публикуется на GitHub Pages при каждом push. Исходный код на</span> <a href="https://github.com/DePhobos/dephobos.github.io">GitHub</a>.</p>
+    <p><span data-l="en">Last deployed</span><span data-l="ru">Последний деплой</span>:
+      <time>DEPLOY_DATE</time>,
+      <span data-l="en">commit</span><span data-l="ru">коммит</span>
+      <a href="https://github.com/DePhobos/dephobos.github.io/commit/__COMMIT_SHA__"><code>
+__COMMIT_SHA__</code></a></p>
+  </footer>
+</main>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var meta={
+    en:{title:'Gleb Bakhtin — SRE / DevOps Engineer',
+        desc:'SRE and DevOps engineer in Moscow: Kubernetes, CI/CD, infrastructure as code, observability. Open to Middle+ roles, remote or with relocation.',
+        toLight:'Switch to light theme', toDark:'Switch to dark theme'},
+    ru:{title:'Глеб Бахтин — SRE / DevOps-инженер',
+        desc:'SRE и DevOps-инженер из Москвы: Kubernetes, CI/CD, инфраструктура как код, observability. Ищу позицию Middle+, удалённо или с релокацией.',
+        toLight:'Включить светлую тему', toDark:'Включить тёмную тему'}
+  };
+  function save(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+
+  var themeBtn=document.getElementById('theme-btn');
+  function labelTheme(){
+    var m=meta[root.lang]||meta.en;
+    themeBtn.setAttribute('aria-label',root.dataset.theme==='dark'?m.toLight:m.toDark);
+    themeBtn.title=themeBtn.getAttribute('aria-label');
+    document.querySelector('meta[name="theme-color"]').content=root.dataset.theme==='dark'?'#0E1923':'#E9EEF2';
+  }
+  function setLang(l){
+    root.lang=l;
+    document.title=meta[l].title;
+    document.querySelector('meta[name="description"]').content=meta[l].desc;
+    document.querySelectorAll('[data-set-lang]').forEach(function(b){
+      b.setAttribute('aria-pressed',String(b.dataset.setLang===l));
+    });
+    labelTheme();
+  }
+
+  document.querySelectorAll('[data-set-lang]').forEach(function(b){
+    b.addEventListener('click',function(){
+      setLang(b.dataset.setLang); save('lang',b.dataset.setLang);
+      // keep ?lang= in the address bar in sync, so a copied link opens in the same language
+      var u=new URL(location.href);
+      if(b.dataset.setLang==='ru')u.searchParams.set('lang','ru');else u.searchParams.delete('lang');
+      history.replaceState(null,'',u);
+    });
+  });
+  themeBtn.addEventListener('click',function(){
+    var t=root.dataset.theme==='dark'?'light':'dark';
+    root.dataset.theme=t; save('theme',t); labelTheme();
+  });
+  setLang(root.lang==='ru'?'ru':'en');
+
+  // Skill notes: one open note per group
+  function close(btn){
+    btn.setAttribute('aria-expanded','false');
+    document.getElementById(btn.getAttribute('aria-controls')).hidden=true;
+  }
+  document.querySelectorAll('button.chip[aria-controls]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var wasOpen=btn.getAttribute('aria-expanded')==='true';
+      btn.closest('.sk-group').querySelectorAll('button.chip[aria-expanded="true"]').forEach(close);
+      if(!wasOpen){
+        btn.setAttribute('aria-expanded','true');
+        document.getElementById(btn.getAttribute('aria-controls')).hidden=false;
+      }
+    });
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Escape')return;
+    var open=document.querySelector('button.chip[aria-expanded="true"]');
+    if(open){close(open);open.focus();}
+  });
+})();
+</script>
 </body>
 </html>
