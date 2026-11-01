@@ -445,10 +445,14 @@ footer code{font-size:.85em}
     <div class="sk-group">
       <h3 class="sk-label"><span data-l="en">Security</span><span data-l="ru">Безопасность</span></h3>
       <ul class="chips">
-        <li><span class="chip">HashiCorp Vault</span></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-vault">HashiCorp Vault</button></li>
         <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-sops">SOPS (age)</button></li>
         <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-pki">PKI</button></li>
       </ul>
+      <div class="note" id="n-vault" hidden><h4>HashiCorp Vault</h4>
+        <p data-l="en">Worked with secrets in HashiCorp Vault. Separately audited git repositories for leaked secrets with Gitleaks.</p>
+        <p data-l="ru">Работал с секретами в HashiCorp Vault. Отдельно проводил аудит git-репозиториев на утечки секретов с помощью Gitleaks.</p>
+      </div>
       <div class="note" id="n-sops" hidden><h4>SOPS (age)</h4>
         <p data-l="en">For Sentry at Alfa-Bank we kept secrets in the repository encrypted with SOPS and age.</p>
         <p data-l="ru">В проекте Sentry в Альфа-Банке хранили секреты в репозитории в зашифрованном виде через SOPS и age.</p>
