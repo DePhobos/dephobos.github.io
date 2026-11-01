@@ -358,6 +358,7 @@ footer code{font-size:.85em}
       <ul class="chips">
         <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-prom">Prometheus</button></li>
         <li><span class="chip">VictoriaMetrics</span></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-victoria">VictoriaMetrics</button></li>
         <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-grafana">Grafana</button></li>
         <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-zabbix">Zabbix</button></li>
         <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-elk">ELK</button></li>
@@ -366,6 +367,10 @@ footer code{font-size:.85em}
       <div class="note" id="n-prom" hidden><h4>Prometheus</h4>
         <p data-l="en">At PPR (Programmny Produkt) I collected metrics from about 60,000 fare validators and from our server cluster, and set up alerting on top of them together with Grafana and Zabbix.</p>
         <p data-l="ru">В «Программном продукте» собирал метрики примерно с 60 000 валидаторов и с кластера серверов, настраивал по ним алертинг вместе с Grafana и Zabbix.</p>
+      </div>
+      <div class="note" id="n-victoria" hidden><h4>VictoriaMetrics</h4>
+        <p data-l="en">Used VictoriaMetrics at Alfa-Bank, where every cluster had its own instance. Set up alerts and metric scraping.</p>
+        <p data-l="ru">Использовал в Альфа-Банке: в каждом кластере была своя инсталляция. Настраивал алерты и сбор метрик (scraping).</p>
       </div>
       <div class="note" id="n-grafana" hidden><h4>Grafana</h4>
         <p data-l="en">At Alfa-Bank I built many dashboards that sped up incident analysis and shipping code to production. Incident investigation time dropped by about 60%.</p>
