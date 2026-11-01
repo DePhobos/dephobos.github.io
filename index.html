@@ -396,8 +396,8 @@ footer code{font-size:.85em}
         <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-kafka">Kafka</button></li>
         <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-ch">ClickHouse</button></li>
         <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-pg">PostgreSQL</button></li>
-        <li><span class="chip">Redis</span></li>
-        <li><span class="chip">MongoDB</span></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-redis">Redis</button></li>
+        <li><button type="button" class="chip" aria-expanded="false" aria-controls="n-mongo">MongoDB</button></li>
       </ul>
       <div class="note" id="n-kafka" hidden><h4>Kafka</h4>
         <p data-l="en">Used heavily at Alfa-Bank: I connected producers and configured topics, including for Sentry.</p>
@@ -410,6 +410,14 @@ footer code{font-size:.85em}
       <div class="note" id="n-pg" hidden><h4>PostgreSQL</h4>
         <p data-l="en">Deployed and maintained PostgreSQL in Kubernetes, configured through Helm charts and StatefulSets, and took care of failover and backups. For Sentry it held the configuration.</p>
         <p data-l="ru">Развёртывал и сопровождал PostgreSQL в Kubernetes (настройка через Helm-чарты и StatefulSet), обеспечивал отказоустойчивость и резервное копирование. Для Sentry в нём хранилась конфигурация.</p>
+      </div>
+      <div class="note" id="n-redis" hidden><h4>Redis</h4>
+        <p data-l="en">Worked with Redis as the cache layer of a high-load API: monitored cache hit rate and resource usage.</p>
+        <p data-l="ru">Работал с Redis как с кэш-слоем для высоконагруженного API: следил за попаданиями в кэш и потреблением ресурсов.</p>
+      </div>
+      <div class="note" id="n-mongo" hidden><h4>MongoDB</h4>
+        <p data-l="en">Regularly deployed MongoDB at Alfa-Bank and worked with the data directly through queries. Used it as the nodestore for Sentry after an earlier attempt with MinIO did not work out.</p>
+        <p data-l="ru">Регулярно разворачивал MongoDB в Альфа-Банке и работал с данными напрямую запросами. В Sentry использовали её как nodestore: предыдущий вариант на MinIO не сработал.</p>
       </div>
     </div>
 
