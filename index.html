@@ -404,8 +404,8 @@ footer code{font-size:.85em}
         <p data-l="ru">В Альфа-Банке Kafka применялась активно: подключал продюсеров, настраивал топики, в том числе для Sentry.</p>
       </div>
       <div class="note" id="n-ch" hidden><h4>ClickHouse</h4>
-        <p data-l="en">At Alfa-Bank I set up a sharded ClickHouse cluster for Sentry.</p>
-        <p data-l="ru">В Альфа-Банке настраивал шардированный кластер ClickHouse для Sentry.</p>
+        <p data-l="en">At Alfa-Bank I deployed a sharded ClickHouse cluster (4 shards) in Kubernetes for Sentry. When Sentry dropped its built-in Bitnami operator in favour of the Altinity Operator, I deployed the new operator alongside the old one, copied the table data over and removed the old operator's resources.</p>
+        <p data-l="ru">В Альфа-Банке развернул в Kubernetes шардированный кластер ClickHouse (4 шарда) для Sentry. Когда Sentry отказался от встроенного оператора Bitnami и порекомендовал Altinity Operator, развернул новый оператор параллельно, перелил данные таблиц и удалил ресурсы старого.</p>
       </div>
       <div class="note" id="n-pg" hidden><h4>PostgreSQL</h4>
         <p data-l="en">Deployed and maintained PostgreSQL in Kubernetes, configured through Helm charts and StatefulSets, and took care of failover and backups. For Sentry it held the configuration.</p>
