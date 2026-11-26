@@ -22,6 +22,7 @@
 <script>
 (function(){
   var d=document.documentElement,t,l;
+  d.classList.add('js');
   try{t=localStorage.getItem('theme');l=localStorage.getItem('lang');}catch(e){}
   var q=new URLSearchParams(location.search).get('lang');
   if(q==='en'||q==='ru')l=q;
@@ -146,7 +147,31 @@ footer a{color:var(--muted)}
 footer a:hover{color:var(--accent)}
 footer code{font-size:.85em}
 
+.metric{position:relative;display:inline-block;font-variant-numeric:tabular-nums}
+.metric.counting{color:transparent}
+.metric-value{position:absolute;inset:0;text-align:right;color:var(--ink)}
+
+@keyframes rise{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@media (prefers-reduced-motion:no-preference){
+  header h1,header .lead,header .cta,header .loop{animation:rise .6s ease-out both}
+  header h1{animation-delay:.08s}
+  header .lead{animation-delay:.16s}
+  header .cta{animation-delay:.24s}
+  header .loop{animation-delay:.32s}
+  header .cta:focus-within{animation:none}
+
+  .js .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease-out,transform .6s ease-out}
+  .js .reveal.in,.js .reveal:focus-within{opacity:1;transform:translateY(0)}
+  .js .reveal:focus-within{transition:none}
+}
+
 @media (prefers-reduced-motion:reduce){
+  .metric.counting{color:inherit}
+  .metric-value{display:none}
   html{scroll-behavior:auto}
   .seg{animation:none;opacity:1}
   .note,button.chip::after{animation:none;transition:none}
@@ -221,16 +246,16 @@ footer code{font-size:.85em}
       <ul data-l="en">
         <li>Kept mission-critical banking systems reliable for 40M users at about 300K RPS, within SLA/SLO targets.</li>
         <li>Was the only DevOps engineer on self-hosted Sentry for the mobile banking platform, from pilot to production, where it fully replaced Firebase. Responsible for its infrastructure: a highly available install on a 20-node Kubernetes cluster.</li>
-        <li>Built Grafana-based observability that cut incident investigation time by about 60%.</li>
-        <li>Managed infrastructure with Terraform on Yandex Cloud; right-sized test environments and cut cloud costs by 27%.</li>
+        <li>Built Grafana-based observability that cut incident investigation time by about <span class="metric">60%</span>.</li>
+        <li>Managed infrastructure with Terraform on Yandex Cloud; right-sized test environments and cut cloud costs by <span class="metric">27%</span>.</li>
         <li>On call: investigated production incidents and ran root cause analysis with ELK, API tracing and microservice diagnostics.</li>
         <li>Rolled out production releases of API and UI components and checked service health after each deploy.</li>
       </ul>
       <ul data-l="ru">
         <li>Отвечал за надёжность критичных банковских систем: 40 млн пользователей, около 300K RPS, в рамках SLA/SLO.</li>
         <li>Был единственным DevOps-инженером в проекте self-hosted Sentry для мобильного банка: от пилота до продакшена, где Sentry полностью заменил Firebase. Отвечал за инфраструктуру — отказоустойчивую инсталляцию на 20-нодовом Kubernetes-кластере.</li>
-        <li>Построил observability в Grafana и сократил время разбора инцидентов примерно на 60%.</li>
-        <li>Вёл инфраструктуру через Terraform в Yandex Cloud; оптимизировал тестовые окружения и снизил расходы на облако на 27%.</li>
+        <li>Построил observability в Grafana и сократил время разбора инцидентов примерно на <span class="metric">60%</span>.</li>
+        <li>Вёл инфраструктуру через Terraform в Yandex Cloud; оптимизировал тестовые окружения и снизил расходы на облако на <span class="metric">27%</span>.</li>
         <li>Дежурства: разбирал продакшен-инциденты и проводил RCA с помощью ELK, трассировки API и диагностики микросервисов.</li>
         <li>Выкатывал продакшен-релизы API- и UI-компонентов и проверял состояние сервисов после деплоя.</li>
       </ul>
@@ -242,7 +267,7 @@ footer code{font-size:.85em}
       <ul data-l="en">
         <li>Moved ticket machines of the metro and suburban rail payment systems from Windows to Astra Linux: installed the OS, sorted out hardware drivers and wrote an Ansible playbook that now sets up each new machine.</li>
         <li>Wrote an Ansible role for mass OS updates of tens of thousands of tram fare validators that can resume interrupted runs, cutting manual effort by 70 to 80%.</li>
-        <li>Ran log collection for about 60,000 devices in ELK; ILM policies and a cold storage tier cut storage costs by 40%.</li>
+        <li>Ran log collection for about 60,000 devices in ELK; ILM policies and a cold storage tier cut storage costs by <span class="metric">40%</span>.</li>
         <li>Set up monitoring and alerting for the same fleet with Prometheus, Grafana and Zabbix.</li>
         <li>Built a GitLab CI pipeline (Docker + Ansible) that cut environment provisioning from 2 hours to 15 minutes.</li>
         <li>Maintained production and test environments and ran zero-downtime infrastructure releases.</li>
@@ -250,7 +275,7 @@ footer code{font-size:.85em}
       <ul data-l="ru">
         <li>Переводил билетные автоматы платёжных систем метро и ЦППК с Windows на Astra Linux: ставил ОС, подбирал драйверы под оборудование и написал Ansible-плейбук, который теперь настраивает каждый новый автомат.</li>
         <li>Написал Ansible-роль для массового обновления ОС на десятках тысяч трамвайных валидаторов с возможностью продолжить прерванное обновление; ручной работы стало меньше на 70–80%.</li>
-        <li>Вёл сбор логов примерно с 60 000 устройств в ELK; ILM-политики и холодное хранилище снизили расходы на хранение на 40%.</li>
+        <li>Вёл сбор логов примерно с 60 000 устройств в ELK; ILM-политики и холодное хранилище снизили расходы на хранение на <span class="metric">40%</span>.</li>
         <li>Настроил мониторинг и алертинг для этого парка на Prometheus, Grafana и Zabbix.</li>
         <li>Собрал пайплайн GitLab CI (Docker + Ansible), который сократил развёртывание окружения с 2 часов до 15 минут.</li>
         <li>Поддерживал продакшен и тестовые окружения, проводил инфраструктурные релизы без простоя.</li>
@@ -574,6 +599,60 @@ __COMMIT_SHA__</code></a></p>
     if(e.key!=='Escape')return;
     var open=document.querySelector('button.chip[aria-expanded="true"]');
     if(open){close(open);open.focus();}
+  });
+})();
+(function(){
+  if(!('IntersectionObserver' in window))return;
+  var motion=window.matchMedia('(prefers-reduced-motion: reduce)');
+  if(motion.matches)return;
+
+  function animateMetrics(block){
+    var metrics=Array.from(block.querySelectorAll('.metric'),function(node){
+      var goal=parseInt(node.textContent,10);
+      var value=document.createElement('span');
+      value.className='metric-value';
+      value.setAttribute('aria-hidden','true');
+      value.textContent='0%';
+      node.appendChild(value);
+      node.classList.add('counting');
+      return {node:node, value:value, goal:goal};
+    });
+    if(!metrics.length)return;
+
+<!-- Metric animation -->
+    var start;
+    function frame(now){
+      if(start===undefined)start=now;
+      var progress=motion.matches?1:Math.min((now-start)/2000,1);
+      var eased=1-Math.pow(1-progress,3);
+      metrics.forEach(function(metric){
+        var value=String(Math.floor(metric.goal*eased))+'%';
+        if(progress===1){
+          metric.node.classList.remove('counting');
+          metric.value.remove();
+        }else if(metric.value.textContent!==value){
+          metric.value.textContent=value;
+        }
+      });
+      if(progress<1)requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting)return;
+      if(entry.intersectionRatio<.15 && entry.rootBounds &&
+         entry.boundingClientRect.height*.15<=entry.rootBounds.height)return;
+      entry.target.classList.add('in');
+      observer.unobserve(entry.target);
+      if(!motion.matches)animateMetrics(entry.target);
+    });
+  },{threshold:.15});
+
+  document.querySelectorAll('article,.sk-group').forEach(function(block){
+    observer.observe(block);
+    block.classList.add('reveal');
   });
 })();
 </script>
